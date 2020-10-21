@@ -1,9 +1,14 @@
 # Shell
-一键DD系统
+一键全自动DD系统
+
 Ubuntu 18.04/16.04
+
 Debian 9/10
+
 CentOS 6
+
 CentOS 7 （DD方式）
+
 自定义DD镜像
 
 ```
