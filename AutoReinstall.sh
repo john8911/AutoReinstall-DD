@@ -2,7 +2,7 @@
 
 if [[ $EUID -ne 0 ]]; then
     clear
-    echo "Error: This script must be run as root!" 1>&2
+    echo "错误: 必须以root用户身份运行！" 1>&2
     exit 1
 fi
 
@@ -54,9 +54,9 @@ function GetIp() {
 }
 
 function UpdateIp() {
-  read -r -p "Your IP: " MAINIP
-  read -r -p "Your Gateway: " GATEWAYIP
-  read -r -p "Your Netmask: " NETMASK
+  read -r -p "IP地址: " MAINIP
+  read -r -p "网关: " GATEWAYIP
+  read -r -p "子网掩码: " NETMASK
 }
 
 function SetNetwork() {
@@ -89,11 +89,11 @@ function NetMode() {
   CopyRight
 
   if [ "$isAuto" == '0' ]; then
-    read -r -p "Using DHCP to configure network automatically? [Y/n]:" input
+    read -r -p "使用DHCP自动配置网络？ [Y/n]:" input
     case $input in
       [yY][eE][sS]|[yY]) NETSTR='' ;;
       [nN][oO]|[nN]) isAuto='1' ;;
-      *) clear; echo "Canceled by user!"; exit 1;;
+      *) clear; echo "取消！"; exit 1;;
     esac
   fi
 
@@ -101,15 +101,15 @@ function NetMode() {
     GetIp
     ipCheck
     if [ $? -ne 0 ]; then
-      echo -e "Error occurred when detecting ip. Please input manually.\n"
+      echo -e "检测ip时发生错误，请手工输入！\n"
       UpdateIp
     else
       CopyRight
       echo "IP: $MAINIP"
-      echo "Gateway: $GATEWAYIP"
-      echo "Netmask: $NETMASK"
+      echo "网关: $GATEWAYIP"
+      echo "子网掩码: $NETMASK"
       echo -e "\n"
-      read -r -p "Confirm? [Y/n]:" input
+      read -r -p "确定？ [Y/n]:" input
       case $input in
         [yY][eE][sS]|[yY]) ;;
         [nN][oO]|[nN])
@@ -118,11 +118,11 @@ function NetMode() {
           ipCheck
           [[ $? -ne 0 ]] && {
             clear
-            echo -e "Input error!\n"
+            echo -e "输入错误！\n"
             exit 1
           }
         ;;
-        *) clear; echo "Canceled by user!"; exit 1;;
+        *) clear; echo "取消！"; exit 1;;
       esac
     fi
     NETSTR="--ip-addr ${MAINIP} --ip-gate ${GATEWAYIP} --ip-mask ${NETMASK}"
@@ -139,14 +139,14 @@ function Start() {
   fi
 
   if [ "$isAuto" == '0' ]; then
-    echo "Using DHCP mode."
+    echo "使用DHCP模式."
   else
     echo "IP: $MAINIP"
     echo "Gateway: $GATEWAYIP"
     echo "Netmask: $NETMASK"
   fi
 
-  [[ "$isCN" == '1' ]] && echo "Using domestic mode."
+  [[ "$isCN" == '1' ]] && echo "使用手动IP模式."
 
   if [ -f "/tmp/InstallNET.sh" ]; then
     rm -f /tmp/InstallNET.sh
@@ -190,9 +190,9 @@ function Start() {
     7) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 18.04 -v 64 -a $NETSTR $UMIRROR ;;
     8)
       echo -e "\n"
-      read -r -p "Custom image URL: " imgURL
+      read -r -p "自定义镜像URL: " imgURL
       echo -e "\n"
-      read -r -p "Are you sure start reinstall? [Y/n]: " input
+      read -r -p "确定要重新安装吗？ [Y/n]: " input
       case $input in
         [yY][eE][sS]|[yY]) bash /tmp/InstallNET.sh $NETSTR -dd $imgURL $DMIRROR ;;
         *) clear; echo "Canceled by user!"; exit 1;;
