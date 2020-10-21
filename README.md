@@ -12,5 +12,5 @@ CentOS 7 （DD方式）
 自定义DD镜像
 
 ```
-wget --no-check-certificate -O AutoReinstall.sh https://git.io/AutoReinstall.sh && bash AutoReinstall.sh
+wget --no-check-certificate -O AutoReinstall.sh https://raw.githubusercontent.com/john8911/shell/master/AutoReinstall.sh && bash AutoReinstall.sh
 ```
