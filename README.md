@@ -6,7 +6,7 @@
 apt-get install -y xz-utils openssl gawk file
 
 #RedHat/CentOS:
-yum install -y xz openssl gawk file
+yum install -y xz openssl gawk file wget curl
 如果出现错误，运行以下代码
 
 #Debian/Ubuntu:
